@@ -1,241 +1,121 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>introduce</title>
-    <url>/2021/09/22/introduce/</url>
-    <content><![CDATA[<p>这是yec的博客~</p>
-]]></content>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Linux CentOs7 升级内核</title>
+      <link href="/2021/10/04/linux-kernel-update/"/>
+      <url>/2021/10/04/linux-kernel-update/</url>
+      
+        <content type="html"><![CDATA[<p>本博客介绍两种升级linux kernel到指定版本4.13.1的方式，第一种方式从源码编译费时费力，第二种方式较为快速，但是作者第一次操作的时候，估计由于命令使用失误导致服务器无法开机，最后联系管理员解决。</p><p>操作系统：Centos7</p><span id="more"></span><h2 id="第一种方法：从源码编译（慎重）"><a href="#第一种方法：从源码编译（慎重）" class="headerlink" title="第一种方法：从源码编译（慎重）"></a>第一种方法：从源码编译（慎重）</h2><h5 id="1-下载linux内核压缩包"><a href="#1-下载linux内核压缩包" class="headerlink" title="1.下载linux内核压缩包"></a>1.下载linux内核压缩包</h5><p>官网地址：<a href="https://www.kernel.org/">https://www.kernel.org/</a></p><p>但是我没有找到4.13.1</p><p>于是使用ftp的网站：<a href="https://cdn.kernel.org/">https://cdn.kernel.org/</a></p><p><a href="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.1.tar.xz">https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.1.tar.xz</a></p><h5 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h5><p>进入root状态，su命令，然后输入密码</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar  -Jxvf  linux-4.2.3.tar.xz -C  /usr/src/</span><br></pre></td></tr></table></figure><p>解压文件到/usr/src/文件夹里，这个文件夹一般存放内核相关东西</p><h5 id="3-清除之前编译产生"><a href="#3-清除之前编译产生" class="headerlink" title="3.清除之前编译产生"></a>3.清除之前编译产生</h5><p>如果是第一次编译，请省略此步骤</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make mrproper</span><br><span class="line"><span class="meta">#</span><span class="bash">删除所有的编译生成文件， 还有内核配置文件， 再加上各种备份文件</span></span><br></pre></td></tr></table></figure><h5 id="4-Attention"><a href="#4-Attention" class="headerlink" title="4.Attention"></a>4.Attention</h5><p>配置相关环境：全部使用yum install解决</p><p>参考：<a href="https://www.yuque.com/docs/share/15a943af-8926-4c73-8e21-235c7bd5c42d">https://www.yuque.com/docs/share/15a943af-8926-4c73-8e21-235c7bd5c42d</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">yum install -y  qemu-guest-agent</span><br><span class="line">yum install autoconf automake libtool httpd openssl openssl-devel libxcb libxcb-devel pango pango-devel httpd-devel mod_ssl</span><br><span class="line">yum install wget</span><br><span class="line">yum -y install gcc gcc-c++ kernel-devel</span><br><span class="line">yum install git</span><br><span class="line">yum install vim</span><br><span class="line">yum install -y bind-utils dnsmasq</span><br><span class="line">yum install openssl</span><br><span class="line">yum install protobuf</span><br><span class="line">yum install protobuf-compiler libprotobuf-dev</span><br><span class="line">yum install gcc gcc-c++</span><br><span class="line">yum install lrzsz</span><br><span class="line">yum install python3.x86_64</span><br><span class="line">yum install python3-devel.x86_64</span><br><span class="line">yum install patch</span><br><span class="line">yum install ncurses-devel</span><br><span class="line">yum install bcc</span><br><span class="line">yum install ncurses</span><br><span class="line">yum install  elfutils-libelf-devel</span><br><span class="line">yum install bison</span><br><span class="line">yum install flex</span><br><span class="line">yum install openssl-devel</span><br><span class="line">yum install llvm.x86_64</span><br><span class="line">yum install openssl</span><br><span class="line">yum install openssl-devel</span><br><span class="line">yum install llvm</span><br><span class="line">yum install clang</span><br><span class="line">yum install iproute.x86_64</span><br><span class="line">yum install bc</span><br><span class="line">yum install git</span><br><span class="line">yum groupinstall &#x27;Development Tools&#x27;</span><br><span class="line">yum search protobuf</span><br><span class="line">yum install protobuf.x86_64</span><br><span class="line">yum install protobuf-devel.x86_64</span><br><span class="line">yum install psmisc</span><br><span class="line">yum install protobuf-compiler</span><br><span class="line">yum install install autoconf automake libtool httpd openssl openssl-devel libxcb libxcb-devel pango pango-devel httpd-devel mod_ssl</span><br></pre></td></tr></table></figure><h5 id="5-构建-设置-configure-config？我不确定用专业术语怎么称呼这个步骤"><a href="#5-构建-设置-configure-config？我不确定用专业术语怎么称呼这个步骤" class="headerlink" title="5.构建/设置/configure/config？我不确定用专业术语怎么称呼这个步骤"></a>5.构建/设置/configure/config？我不确定用专业术语怎么称呼这个步骤</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make   menuconfig</span><br></pre></td></tr></table></figure><p>等待，然后出现彩色界面：</p><p><img src="/2021/10/04/linux-kernel-update/1.png"></p><p>直接EXIT（采用默认配置即可）</p><h5 id="6-Attention"><a href="#6-Attention" class="headerlink" title="6.Attention"></a>6.Attention</h5><p><strong>错误：Cannot use CONFIG_STACK_VALIDATION, please install libelf-dev or elfutils-libelf-devel的解决：</strong></p><p>参考：<a href="https://blog.csdn.net/sunroyi666/article/details/83380136">https://blog.csdn.net/sunroyi666/article/details/83380136</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install elfutils-libelf-devel</span><br></pre></td></tr></table></figure><h5 id="7-编译-amp-amp-安装"><a href="#7-编译-amp-amp-安装" class="headerlink" title="7.编译&amp;&amp;安装"></a>7.编译&amp;&amp;安装</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make -j8</span><br><span class="line">make  modules_install</span><br></pre></td></tr></table></figure><p>-j8的意思是使用8线程编译，但是还会编译1个小时左右</p><p>编译好直接安装：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure><h5 id="8-更改启动内核"><a href="#8-更改启动内核" class="headerlink" title="8.更改启动内核"></a>8.更改启动内核</h5><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">awk -F\&#x27; &#x27;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&#x27; /etc/grub2.cfg</span><br><span class="line"><span class="meta">#</span><span class="bash">查看可使用内核表</span></span><br><span class="line">grub2-editenv list</span><br><span class="line"><span class="meta">#</span><span class="bash">查看当前的内核，对应几号</span></span><br><span class="line">grub2-set-default 1</span><br><span class="line"><span class="meta">#</span><span class="bash">改启动内核为1号内核，后面的数字可以任意改</span></span><br><span class="line">reboot</span><br><span class="line"><span class="meta">#</span><span class="bash">重启</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta">#</span><span class="bash">查看内核</span></span><br></pre></td></tr></table></figure><h2 id="第二种方法：下载编译好的包"><a href="#第二种方法：下载编译好的包" class="headerlink" title="第二种方法：下载编译好的包"></a>第二种方法：下载编译好的包</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wget http://193.49.22.109/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-devel-4.17.1-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://193.49.22.109/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-4.17.1-1.el7.elrepo.x86_64.rpm</span><br><span class="line"><span class="meta">#</span><span class="bash">下载两个编译好的包</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">cd</span> /root &amp;&amp; yum localinstall -y kernel-ml*</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash">最后再执行上面第8步操作</span></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>简介</category>
+          
+          <category> linux </category>
+          
       </categories>
-  </entry>
-  <entry>
-    <title>shaka-buffer</title>
-    <url>/2021/09/22/shaka-buffer/</url>
-    <content><![CDATA[<p>本博客是作者在学习shaka player 缓冲区时，总结的内容，详细解答了shaka player启动和缓冲的流程，以及最重要的三个变量：bufferingGoal、rebufferingGoal、bufferbehind。点击展开全文来获取更多吧~</p>
-<span id="more"></span>
-
-<ol>
-<li><h5 id="启动（从开头开始播放）-重启动（定位到一个不在buffer区的位置）流程："><a href="#启动（从开头开始播放）-重启动（定位到一个不在buffer区的位置）流程：" class="headerlink" title="启动（从开头开始播放）/重启动（定位到一个不在buffer区的位置）流程："></a>启动（从开头开始播放）/重启动（定位到一个不在buffer区的位置）流程：</h5><p><strong>阈值</strong>：饥饿阈值大小一般为max(minBufferTime, rebufferingGoal);，满足阈值大小为min(rebufferinggoal/2,0.5)</p>
-<p><strong>状态</strong>：饥饿状态（rebuffering状态）、满足状态</p>
-<p><strong>文件</strong>：buffering_observer.js和player.js</p>
-<p><img src="/2021/09/22/shaka-buffer/1.png"></p>
-</li>
-<li><h5 id="缓冲流程"><a href="#缓冲流程" class="headerlink" title="缓冲流程"></a>缓冲流程</h5><p><strong>阈值</strong>：bufferingGoal</p>
-<p><strong>文件</strong>：steaming_engine.js.js和player.js</p>
-<p><img src="/2021/09/22/shaka-buffer/2.png"></p>
-</li>
-<li><h5 id="场景讨论"><a href="#场景讨论" class="headerlink" title="场景讨论"></a>场景讨论</h5><ul>
-<li><h6 id="顺序播放下，什么时候会出现视频无法播放需要缓冲的时候"><a href="#顺序播放下，什么时候会出现视频无法播放需要缓冲的时候" class="headerlink" title="顺序播放下，什么时候会出现视频无法播放需要缓冲的时候"></a>顺序播放下，什么时候会出现视频无法播放需要缓冲的时候</h6><p><strong>无法播放的时刻：</strong>顺序播放下，无法播放就是current time没有被缓冲，遇到这种情况一般是ts文件无法获取，网络卡顿。</p>
-<p>再次重新播放就需要重启动，见流程图</p>
-<p><strong>需要缓冲的时刻：一旦Bufferlead小于bufferingGoal便开始缓冲。</strong></p>
-</li>
-<li><h6 id="如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？"><a href="#如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？" class="headerlink" title="如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？"></a>如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？</h6><p><strong>理论上可以播放</strong></p>
-<p>假设：满足阈值0.5，饥饿阈值2，bufferingGoal 10，ts块文件大小为5s，假设现在缓冲两个ts文件，缓冲区为0-10s</p>
-<p>在0-9.5s，拖动进度条，没有任何问题，可以任意播放。</p>
-<p>在9.5-10s，拖动进度条，理论上没有任何问题（因为ts文件被下载了，肯定可以播放），但是进入饥饿状态，用户体验会不好。</p>
-</li>
-<li><h6 id="如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？"><a href="#如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？" class="headerlink" title="如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？"></a>如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？</h6><p>对应到重启动过程，需要缓冲到time=p+饥饿阈值，才允许播放，和上面的流程图一致。</p>
-</li>
-<li><h6 id="如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？"><a href="#如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？" class="headerlink" title="如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？"></a>如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？</h6><p>两种情况：</p>
-<p>回退一小部分，发现不需要重新缓冲</p>
-<p><img src="/2021/09/22/shaka-buffer/3.png"></p>
-<p><img src="/2021/09/22/shaka-buffer/4.png"></p>
-<p>回退很多，从currenttime重启动</p>
-<p><img src="/2021/09/22/shaka-buffer/5.png"></p>
-<p><img src="/2021/09/22/shaka-buffer/6.png"></p>
-<p><img src="/2021/09/22/shaka-buffer/7.png"></p>
-<p><img src="/2021/09/22/shaka-buffer/8.png"></p>
-<p>发现缓冲区最大只有45秒（和每个ts文件的大小有很大关系），当回退到buffer start之前就重新缓冲（重启动）。</p>
-<p><img src="/2021/09/22/shaka-buffer/9.png"></p>
-</li>
-</ul>
-</li>
-</ol>
-<p>顺着这个思路，找到extern/shaka/player.js，其中有三个变量，这三个变量也与之前的流程图对应：</p>
-<p><code>bufferingGoal</code>是我们尝试缓冲的内容量。例如，如果将其设置为 30，我们将获取段直到我们有至少 30 秒的缓冲时间。</p>
-<p><code>rebufferingGoal</code>是我们在播放之前必须缓冲的内容量。例如，如果这是 15，我们将保持缓冲状态，直到缓冲了至少 15 秒。这会影响启动时的缓冲和稍后播放期间的重新缓冲。</p>
-<p><code>bufferBehind</code>是我们在播放头后面的缓冲区中保留的内容量。例如，如果这是 30，我们会将 30 秒的内容缓存在视频的<code>currentTime</code>. 当我们有超过 30 秒的缓冲后，内容将从缓冲区的开头移除以节省内存。这是最低限度；如果流的最大段大小比 ‘bufferBehind’ 长，则将使用它。</p>
-<p>详见：<a href="https://shaka-player-demo.appspot.com/docs/api/tutorial-network-and-buffering-config.html">https://shaka-player-demo.appspot.com/docs/api/tutorial-network-and-buffering-config.html</a></p>
-<p>综上所述：一个buffer MAXsize为</p>
-<p>bufferbehind+bufferinggoal=[m<em>time(一个ts文件)]+10+[n</em>time(一个ts文件)] mod (bufferinggoal)</p>
-<p>(m为最大的正整数，使得m*time(一个ts文件)&lt;bufferbehind)</p>
-<p>(n为最小的正整数，使得n*time(一个ts文件)&gt;bufferinggoal)</p>
-<p>例如本题一个ts文件是7s左右，那么最大buffer为28+10+4=42</p>
-<p><img src="/2021/09/22/shaka-buffer/10.png"></p>
-<ol start="4">
-<li>目前可以使用的信息以及相应的信息内容</li>
-</ol>
-<table>
-<thead>
-<tr>
-<th align="center">函数</th>
-<th align="center">用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">bufferStart</td>
-<td align="center">获取缓冲区中的第一个时间戳</td>
-</tr>
-<tr>
-<td align="center">bufferEnd</td>
-<td align="center">获取缓冲区中的最后一个时间戳</td>
-</tr>
-<tr>
-<td align="center">isBuffered</td>
-<td align="center">确定给定时间是否在缓冲区中</td>
-</tr>
-<tr>
-<td align="center">bufferedAheadOf</td>
-<td align="center">计算在播放某个时刻的片段之前已经缓存了多少数据</td>
-</tr>
-<tr>
-<td align="center">getBufferedInfo</td>
-<td align="center">返回缓冲区信息</td>
-</tr>
-<tr>
-<td align="center">getBuffered</td>
-<td align="center">返回缓冲区的范围</td>
-</tr>
-<tr>
-<td align="center">appendBuffer</td>
-<td align="center">加入一个附加数据到SourceBuffer的操作</td>
-</tr>
-</tbody></table>
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> linux </tag>
+            
+            <tag> 内核 </tag>
+            
+            <tag> kernel </tag>
+            
+            <tag> 编译 </tag>
+            
+            <tag> 升级 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>shaka-buffer</title>
+      <link href="/2021/09/22/shaka-buffer/"/>
+      <url>/2021/09/22/shaka-buffer/</url>
+      
+        <content type="html"><![CDATA[<p>本博客是作者在学习shaka player 缓冲区时，总结的内容，详细解答了shaka player启动和缓冲的流程，以及最重要的三个变量：bufferingGoal、rebufferingGoal、bufferbehind。点击展开全文来获取更多吧~</p><span id="more"></span><ol><li><h5 id="启动（从开头开始播放）-重启动（定位到一个不在buffer区的位置）流程："><a href="#启动（从开头开始播放）-重启动（定位到一个不在buffer区的位置）流程：" class="headerlink" title="启动（从开头开始播放）/重启动（定位到一个不在buffer区的位置）流程："></a>启动（从开头开始播放）/重启动（定位到一个不在buffer区的位置）流程：</h5><p><strong>阈值</strong>：饥饿阈值大小一般为max(minBufferTime, rebufferingGoal);，满足阈值大小为min(rebufferinggoal/2,0.5)</p><p><strong>状态</strong>：饥饿状态（rebuffering状态）、满足状态</p><p><strong>文件</strong>：buffering_observer.js和player.js</p><p><img src="/2021/09/22/shaka-buffer/1.png"></p></li><li><h5 id="缓冲流程"><a href="#缓冲流程" class="headerlink" title="缓冲流程"></a>缓冲流程</h5><p><strong>阈值</strong>：bufferingGoal</p><p><strong>文件</strong>：steaming_engine.js.js和player.js</p><p><img src="/2021/09/22/shaka-buffer/2.png"></p></li><li><h5 id="场景讨论"><a href="#场景讨论" class="headerlink" title="场景讨论"></a>场景讨论</h5><ul><li><h6 id="顺序播放下，什么时候会出现视频无法播放需要缓冲的时候"><a href="#顺序播放下，什么时候会出现视频无法播放需要缓冲的时候" class="headerlink" title="顺序播放下，什么时候会出现视频无法播放需要缓冲的时候"></a>顺序播放下，什么时候会出现视频无法播放需要缓冲的时候</h6><p><strong>无法播放的时刻：</strong>顺序播放下，无法播放就是current time没有被缓冲，遇到这种情况一般是ts文件无法获取，网络卡顿。</p><p>再次重新播放就需要重启动，见流程图</p><p><strong>需要缓冲的时刻：一旦Bufferlead小于bufferingGoal便开始缓冲。</strong></p></li><li><h6 id="如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？"><a href="#如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？" class="headerlink" title="如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？"></a>如果用户突然间将进度条拖拉到播放器显示已缓冲的的地方，是不是一定就能播放？</h6><p><strong>理论上可以播放</strong></p><p>假设：满足阈值0.5，饥饿阈值2，bufferingGoal 10，ts块文件大小为5s，假设现在缓冲两个ts文件，缓冲区为0-10s</p><p>在0-9.5s，拖动进度条，没有任何问题，可以任意播放。</p><p>在9.5-10s，拖动进度条，理论上没有任何问题（因为ts文件被下载了，肯定可以播放），但是进入饥饿状态，用户体验会不好。</p></li><li><h6 id="如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？"><a href="#如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？" class="headerlink" title="如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？"></a>如果用户将进度条拖拉到播放器显示还未缓冲的位置P，播放器需要缓冲多少数据才能允许用户进行播放？</h6><p>对应到重启动过程，需要缓冲到time=p+饥饿阈值，才允许播放，和上面的流程图一致。</p></li><li><h6 id="如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？"><a href="#如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？" class="headerlink" title="如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？"></a>如果用户将进度条回退到之前播放过的场景下是否需要重新缓冲数据？如果需要一般要缓冲多少才能允许播放？</h6><p>两种情况：</p><p>回退一小部分，发现不需要重新缓冲</p><p><img src="/2021/09/22/shaka-buffer/3.png"></p><p><img src="/2021/09/22/shaka-buffer/4.png"></p><p>回退很多，从currenttime重启动</p><p><img src="/2021/09/22/shaka-buffer/5.png"></p><p><img src="/2021/09/22/shaka-buffer/6.png"></p><p><img src="/2021/09/22/shaka-buffer/7.png"></p><p><img src="/2021/09/22/shaka-buffer/8.png"></p><p>发现缓冲区最大只有45秒（和每个ts文件的大小有很大关系），当回退到buffer start之前就重新缓冲（重启动）。</p><p><img src="/2021/09/22/shaka-buffer/9.png"></p></li></ul></li></ol><p>顺着这个思路，找到extern/shaka/player.js，其中有三个变量，这三个变量也与之前的流程图对应：</p><p><code>bufferingGoal</code>是我们尝试缓冲的内容量。例如，如果将其设置为 30，我们将获取段直到我们有至少 30 秒的缓冲时间。</p><p><code>rebufferingGoal</code>是我们在播放之前必须缓冲的内容量。例如，如果这是 15，我们将保持缓冲状态，直到缓冲了至少 15 秒。这会影响启动时的缓冲和稍后播放期间的重新缓冲。</p><p><code>bufferBehind</code>是我们在播放头后面的缓冲区中保留的内容量。例如，如果这是 30，我们会将 30 秒的内容缓存在视频的<code>currentTime</code>. 当我们有超过 30 秒的缓冲后，内容将从缓冲区的开头移除以节省内存。这是最低限度；如果流的最大段大小比 ‘bufferBehind’ 长，则将使用它。</p><p>详见：<a href="https://shaka-player-demo.appspot.com/docs/api/tutorial-network-and-buffering-config.html">https://shaka-player-demo.appspot.com/docs/api/tutorial-network-and-buffering-config.html</a></p><p>综上所述：一个buffer MAXsize为</p><p>bufferbehind+bufferinggoal=[m<em>time(一个ts文件)]+10+[n</em>time(一个ts文件)] mod (bufferinggoal)</p><p>(m为最大的正整数，使得m*time(一个ts文件)&lt;bufferbehind)</p><p>(n为最小的正整数，使得n*time(一个ts文件)&gt;bufferinggoal)</p><p>例如本题一个ts文件是7s左右，那么最大buffer为28+10+4=42</p><p><img src="/2021/09/22/shaka-buffer/10.png"></p><ol start="4"><li>目前可以使用的信息以及相应的信息内容</li></ol><table><thead><tr><th align="center">函数</th><th align="center">用途</th></tr></thead><tbody><tr><td align="center">bufferStart</td><td align="center">获取缓冲区中的第一个时间戳</td></tr><tr><td align="center">bufferEnd</td><td align="center">获取缓冲区中的最后一个时间戳</td></tr><tr><td align="center">isBuffered</td><td align="center">确定给定时间是否在缓冲区中</td></tr><tr><td align="center">bufferedAheadOf</td><td align="center">计算在播放某个时刻的片段之前已经缓存了多少数据</td></tr><tr><td align="center">getBufferedInfo</td><td align="center">返回缓冲区信息</td></tr><tr><td align="center">getBuffered</td><td align="center">返回缓冲区的范围</td></tr><tr><td align="center">appendBuffer</td><td align="center">加入一个附加数据到SourceBuffer的操作</td></tr></tbody></table>]]></content>
+      
+      
       <categories>
-        <category>shaka-player</category>
+          
+          <category> shaka-player </category>
+          
       </categories>
-      <tags>
-        <tag>shaka player</tag>
-        <tag>buffer</tag>
-        <tag>javascript</tag>
-        <tag>chrome debug</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>nginx本地反代解决paddle git clone问题</title>
-    <url>/2021/09/21/paddle_git_nginx/</url>
-    <content><![CDATA[<p>作者在使用服务器git clone paddle/paddle时，苦于服务器没有代理，试过很多方法都无法git clone，而且paddle会下载第三方库，同样需要git clone，所以想到用这种方式来git clone。</p>
-<p>核心思路：将github转换为国内镜像网站，不用翻墙解决问题。</p>
-<span id="more"></span>
-
-<h2 id="1-修改Paddle-CMakeList-txt"><a href="#1-修改Paddle-CMakeList-txt" class="headerlink" title="1. 修改Paddle CMakeList.txt"></a>1. 修改Paddle CMakeList.txt</h2><p>找到国内github镜像网站：</p>
-<ul>
-<li><p><a href="https://hub.fastgit.org/">https://hub.fastgit.org</a></p>
-</li>
-<li><p><a href="https://github.com.cnpmjs.org/">https://github.com.cnpmjs.org</a></p>
-<p>这里采取第一个</p>
-<p>可以看到CMakeList.txt里面有个变量GIT_URL，在181行可以将其修改为国内镜像源。</p>
-<p><img src="/2021/09/21/paddle_git_nginx/1.png"></p>
-<p>这个方法可以下载到Paddle的每个依赖库，但是进行到一半还是会报错：</p>
-<p>可以看到依赖库的一些项目还需要git clone子项目，这个子项目还是会走github.com然后卡住不动。</p>
-</li>
-</ul>
-<p><img src="/2021/09/21/paddle_git_nginx/2.png"></p>
-<h2 id="2-Nginx本地反代"><a href="#2-Nginx本地反代" class="headerlink" title="2.Nginx本地反代"></a>2.Nginx本地反代</h2><p>下载nginx（同时需要openssl）</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install nginx</span><br></pre></td></tr></table></figure>
-
-<p>添加证书：参考<a href="https://www.cnblogs.com/sz-wenbin/p/10998135.html">https://www.cnblogs.com/sz-wenbin/p/10998135.html</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">openssl req \</span><br><span class="line">-newkey rsa:2048 \</span><br><span class="line">-x509 \</span><br><span class="line">-nodes \</span><br><span class="line"><span class="meta">#</span><span class="bash">key的文件名</span></span><br><span class="line">-keyout test.com.key \</span><br><span class="line">-new \</span><br><span class="line"><span class="meta">#</span><span class="bash">证书的文件名</span></span><br><span class="line">-out test.com.crt \</span><br><span class="line"><span class="meta">#</span><span class="bash">网站，CN表示china</span></span><br><span class="line">-subj /CN=github.com \</span><br><span class="line">-reqexts SAN \</span><br><span class="line">-extensions SAN \</span><br><span class="line">-config &lt;(cat /etc/pki/tls/openssl.cnf \</span><br><span class="line"><span class="meta">#</span><span class="bash">这个地方不知道要不要改成git，保险起见也改了</span></span><br><span class="line">&lt;(printf &#x27;[SAN]\nsubjectAltName=DNS:github.com&#x27;)) \</span><br><span class="line">-sha256 \</span><br><span class="line">-days 3650</span><br></pre></td></tr></table></figure>
-
-<p>生成完我们可以在目录看到一下文件：</p>
-<p><img src="/2021/09/21/paddle_git_nginx/3.png"></p>
-<p>pwd,看一下这两个文件所在的路径，会用到，这里我的路径是/root/test</p>
-<p>编辑/etc/nginx/nginx.conf配置文件</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
-
-<p>insert模式向文件中添加（http作用域内）：</p>
-<figure class="highlight nginx"><table><tr><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  <span class="attribute">ssl_certificate</span> /root/test/github.com.crt;</span><br><span class="line">  <span class="attribute">ssl_certificate_key</span> /root/test/github.com.key;</span><br><span class="line">  <span class="comment"># 两个文件的路径</span></span><br><span class="line">  <span class="attribute">ssl_protocols</span> TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;</span><br><span class="line">  <span class="attribute">ssl_ciphers</span> EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;</span><br><span class="line">  <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">server_name</span> github.com;</span><br><span class="line">  <span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="comment"># 国内镜像代理</span></span><br><span class="line">    <span class="attribute">proxy_pass</span> https://hub.fastgit.org/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>把生成的证书添加进信任的目录：<a href="https://www.cnblogs.com/ezgod/p/14270888.html">https://www.cnblogs.com/ezgod/p/14270888.html</a></p>
-<p>在/root/test目录下：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cat test.com.crt &gt;&gt; /etc/pki/tls/certs/ca-bundle.crt</span><br></pre></td></tr></table></figure>
-
-<p>修改host:</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-
-<p>实现本地反代，添加：</p>
-<p><img src="/2021/09/21/paddle_git_nginx/4.png"></p>
-<p>重启nginx，应用nginx.conf配置</p>
-<p>找一下nginx在哪儿</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></figure>
-
-<p>我的nginx在/usr/sbin里</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/sbin</span><br><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure>
-
-<p>重启后，我们来看看随意的git clone，网速很快。</p>
-<p><img src="/2021/09/21/paddle_git_nginx/5.png"></p>
-<p>自此，所有的文件都被定位到本地反代（国内镜像网站）。</p>
-<p>注解：以后每次用到nginx，需要进入目录启动一下nginx</p>
-<p>也有每次启动后都自动启用nginx，这里感觉自动启动不太好，没有配置。</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd /usr/sbin</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
+      
+      
+        <tags>
+            
+            <tag> shaka player </tag>
+            
+            <tag> buffer </tag>
+            
+            <tag> javascript </tag>
+            
+            <tag> chrome debug </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>introduce</title>
+      <link href="/2021/09/22/introduce/"/>
+      <url>/2021/09/22/introduce/</url>
+      
+        <content type="html"><![CDATA[<p>这是yec的博客~</p>]]></content>
+      
+      
       <categories>
-        <category>paddle</category>
+          
+          <category> 简介 </category>
+          
       </categories>
-      <tags>
-        <tag>百度深度学习框架paddlepaddle</tag>
-        <tag>nginx</tag>
-        <tag>git clone</tag>
-        <tag>镜像</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux CentOs7 升级内核</title>
-    <url>/2021/10/04/linux-kernel-update/</url>
-    <content><![CDATA[<p>本博客介绍两种升级linux kernel到指定版本4.13.1的方式，第一种方式从源码编译费时费力，第二种方式较为快速，但是作者第一次操作的时候，估计由于命令使用失误导致服务器无法开机，最后联系管理员解决。</p>
-<p>操作系统：Centos7</p>
-<span id="more"></span>
-
-<h2 id="第一种方法：从源码编译（慎重）"><a href="#第一种方法：从源码编译（慎重）" class="headerlink" title="第一种方法：从源码编译（慎重）"></a>第一种方法：从源码编译（慎重）</h2><h5 id="1-下载linux内核压缩包"><a href="#1-下载linux内核压缩包" class="headerlink" title="1.下载linux内核压缩包"></a>1.下载linux内核压缩包</h5><p>官网地址：<a href="https://www.kernel.org/">https://www.kernel.org/</a></p>
-<p>但是我没有找到4.13.1</p>
-<p>于是使用ftp的网站：<a href="https://cdn.kernel.org/">https://cdn.kernel.org/</a></p>
-<p><a href="https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.1.tar.xz">https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.13.1.tar.xz</a></p>
-<h5 id="2-解压"><a href="#2-解压" class="headerlink" title="2.解压"></a>2.解压</h5><p>进入root状态，su命令，然后输入密码</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">tar  -Jxvf  linux-4.2.3.tar.xz -C  /usr/src/</span><br></pre></td></tr></table></figure>
-
-<p>解压文件到/usr/src/文件夹里，这个文件夹一般存放内核相关东西</p>
-<h5 id="3-清除之前编译产生"><a href="#3-清除之前编译产生" class="headerlink" title="3.清除之前编译产生"></a>3.清除之前编译产生</h5><p>如果是第一次编译，请省略此步骤</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make mrproper</span><br><span class="line"><span class="meta">#</span><span class="bash">删除所有的编译生成文件， 还有内核配置文件， 再加上各种备份文件</span></span><br></pre></td></tr></table></figure>
-
-<h5 id="4-Attention"><a href="#4-Attention" class="headerlink" title="4.Attention"></a>4.Attention</h5><p>配置相关环境：全部使用yum install解决</p>
-<p>参考：<a href="https://www.yuque.com/docs/share/15a943af-8926-4c73-8e21-235c7bd5c42d">https://www.yuque.com/docs/share/15a943af-8926-4c73-8e21-235c7bd5c42d</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install -y  qemu-guest-agent</span><br><span class="line">yum install autoconf automake libtool httpd openssl openssl-devel libxcb libxcb-devel pango pango-devel httpd-devel mod_ssl</span><br><span class="line">yum install wget</span><br><span class="line">yum -y install gcc gcc-c++ kernel-devel</span><br><span class="line">yum install git</span><br><span class="line">yum install vim</span><br><span class="line">yum install -y bind-utils dnsmasq</span><br><span class="line">yum install openssl</span><br><span class="line">yum install protobuf</span><br><span class="line">yum install protobuf-compiler libprotobuf-dev</span><br><span class="line">yum install gcc gcc-c++</span><br><span class="line">yum install lrzsz</span><br><span class="line">yum install python3.x86_64</span><br><span class="line">yum install python3-devel.x86_64</span><br><span class="line">yum install patch</span><br><span class="line">yum install ncurses-devel</span><br><span class="line">yum install bcc</span><br><span class="line">yum install ncurses</span><br><span class="line">yum install  elfutils-libelf-devel</span><br><span class="line">yum install bison</span><br><span class="line">yum install flex</span><br><span class="line">yum install openssl-devel</span><br><span class="line">yum install llvm.x86_64</span><br><span class="line">yum install openssl</span><br><span class="line">yum install openssl-devel</span><br><span class="line">yum install llvm</span><br><span class="line">yum install clang</span><br><span class="line">yum install iproute.x86_64</span><br><span class="line">yum install bc</span><br><span class="line">yum install git</span><br><span class="line">yum groupinstall &#x27;Development Tools&#x27;</span><br><span class="line">yum search protobuf</span><br><span class="line">yum install protobuf.x86_64</span><br><span class="line">yum install protobuf-devel.x86_64</span><br><span class="line">yum install psmisc</span><br><span class="line">yum install protobuf-compiler</span><br><span class="line">yum install install autoconf automake libtool httpd openssl openssl-devel libxcb libxcb-devel pango pango-devel httpd-devel mod_ssl</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-构建-设置-configure-config？我不确定用专业术语怎么称呼这个步骤"><a href="#5-构建-设置-configure-config？我不确定用专业术语怎么称呼这个步骤" class="headerlink" title="5.构建/设置/configure/config？我不确定用专业术语怎么称呼这个步骤"></a>5.构建/设置/configure/config？我不确定用专业术语怎么称呼这个步骤</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make   menuconfig</span><br></pre></td></tr></table></figure>
-
-<p>等待，然后出现彩色界面：</p>
-<p><img src="/2021/10/04/linux-kernel-update/1.png"></p>
-<p>直接EXIT（采用默认配置即可）</p>
-<h5 id="6-Attention"><a href="#6-Attention" class="headerlink" title="6.Attention"></a>6.Attention</h5><p><strong>错误：Cannot use CONFIG_STACK_VALIDATION, please install libelf-dev or elfutils-libelf-devel的解决：</strong></p>
-<p>参考：<a href="https://blog.csdn.net/sunroyi666/article/details/83380136">https://blog.csdn.net/sunroyi666/article/details/83380136</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">yum install elfutils-libelf-devel</span><br></pre></td></tr></table></figure>
-
-<h5 id="7-编译-amp-amp-安装"><a href="#7-编译-amp-amp-安装" class="headerlink" title="7.编译&amp;&amp;安装"></a>7.编译&amp;&amp;安装</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make -j8</span><br><span class="line">make  modules_install</span><br></pre></td></tr></table></figure>
-
-<p>-j8的意思是使用8线程编译，但是还会编译1个小时左右</p>
-<p>编译好直接安装：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make install</span><br></pre></td></tr></table></figure>
-
-<h5 id="8-更改启动内核"><a href="#8-更改启动内核" class="headerlink" title="8.更改启动内核"></a>8.更改启动内核</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">awk -F\&#x27; &#x27;$1==&quot;menuentry &quot; &#123;print i++ &quot; : &quot; $2&#125;&#x27; /etc/grub2.cfg</span><br><span class="line"><span class="meta">#</span><span class="bash">查看可使用内核表</span></span><br><span class="line">grub2-editenv list</span><br><span class="line"><span class="meta">#</span><span class="bash">查看当前的内核，对应几号</span></span><br><span class="line">grub2-set-default 1</span><br><span class="line"><span class="meta">#</span><span class="bash">改启动内核为1号内核，后面的数字可以任意改</span></span><br><span class="line">reboot</span><br><span class="line"><span class="meta">#</span><span class="bash">重启</span></span><br><span class="line">uname -a</span><br><span class="line"><span class="meta">#</span><span class="bash">查看内核</span></span><br></pre></td></tr></table></figure>
-
-
-<h2 id="第二种方法：下载编译好的包"><a href="#第二种方法：下载编译好的包" class="headerlink" title="第二种方法：下载编译好的包"></a>第二种方法：下载编译好的包</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">wget http://193.49.22.109/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-devel-4.17.1-1.el7.elrepo.x86_64.rpm</span><br><span class="line">wget http://193.49.22.109/elrepo/kernel/el7/x86_64/RPMS/kernel-ml-4.17.1-1.el7.elrepo.x86_64.rpm</span><br><span class="line"><span class="meta">#</span><span class="bash">下载两个编译好的包</span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="built_in">cd</span> /root &amp;&amp; yum localinstall -y kernel-ml*</span></span><br><span class="line"><span class="meta">#</span><span class="bash">安装</span></span><br><span class="line"><span class="meta">#</span><span class="bash">最后再执行上面第8步操作</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>nginx本地反代解决paddle git clone问题</title>
+      <link href="/2021/09/21/paddle_git_nginx/"/>
+      <url>/2021/09/21/paddle_git_nginx/</url>
+      
+        <content type="html"><![CDATA[<p>作者在使用服务器git clone paddle/paddle时，苦于服务器没有代理，试过很多方法都无法git clone，而且paddle会下载第三方库，同样需要git clone，所以想到用这种方式来git clone。</p><p>核心思路：将github转换为国内镜像网站，不用翻墙解决问题。</p><span id="more"></span><h2 id="1-修改Paddle-CMakeList-txt"><a href="#1-修改Paddle-CMakeList-txt" class="headerlink" title="1. 修改Paddle CMakeList.txt"></a>1. 修改Paddle CMakeList.txt</h2><p>找到国内github镜像网站：</p><ul><li><p><a href="https://hub.fastgit.org/">https://hub.fastgit.org</a></p></li><li><p><a href="https://github.com.cnpmjs.org/">https://github.com.cnpmjs.org</a></p><p>这里采取第一个</p><p>可以看到CMakeList.txt里面有个变量GIT_URL，在181行可以将其修改为国内镜像源。</p><p><img src="/2021/09/21/paddle_git_nginx/1.png"></p><p>这个方法可以下载到Paddle的每个依赖库，但是进行到一半还是会报错：</p><p>可以看到依赖库的一些项目还需要git clone子项目，这个子项目还是会走github.com然后卡住不动。</p></li></ul><p><img src="/2021/09/21/paddle_git_nginx/2.png"></p><h2 id="2-Nginx本地反代"><a href="#2-Nginx本地反代" class="headerlink" title="2.Nginx本地反代"></a>2.Nginx本地反代</h2><p>下载nginx（同时需要openssl）</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install nginx</span><br></pre></td></tr></table></figure><p>添加证书：参考<a href="https://www.cnblogs.com/sz-wenbin/p/10998135.html">https://www.cnblogs.com/sz-wenbin/p/10998135.html</a></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">openssl req \</span><br><span class="line">-newkey rsa:2048 \</span><br><span class="line">-x509 \</span><br><span class="line">-nodes \</span><br><span class="line"><span class="meta">#</span><span class="bash">key的文件名</span></span><br><span class="line">-keyout test.com.key \</span><br><span class="line">-new \</span><br><span class="line"><span class="meta">#</span><span class="bash">证书的文件名</span></span><br><span class="line">-out test.com.crt \</span><br><span class="line"><span class="meta">#</span><span class="bash">网站，CN表示china</span></span><br><span class="line">-subj /CN=github.com \</span><br><span class="line">-reqexts SAN \</span><br><span class="line">-extensions SAN \</span><br><span class="line">-config &lt;(cat /etc/pki/tls/openssl.cnf \</span><br><span class="line"><span class="meta">#</span><span class="bash">这个地方不知道要不要改成git，保险起见也改了</span></span><br><span class="line">&lt;(printf &#x27;[SAN]\nsubjectAltName=DNS:github.com&#x27;)) \</span><br><span class="line">-sha256 \</span><br><span class="line">-days 3650</span><br></pre></td></tr></table></figure><p>生成完我们可以在目录看到一下文件：</p><p><img src="/2021/09/21/paddle_git_nginx/3.png"></p><p>pwd,看一下这两个文件所在的路径，会用到，这里我的路径是/root/test</p><p>编辑/etc/nginx/nginx.conf配置文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure><p>insert模式向文件中添加（http作用域内）：</p><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">  <span class="attribute">listen</span> <span class="number">443</span> ssl;</span><br><span class="line">  <span class="attribute">ssl_certificate</span> /root/test/github.com.crt;</span><br><span class="line">  <span class="attribute">ssl_certificate_key</span> /root/test/github.com.key;</span><br><span class="line">  <span class="comment"># 两个文件的路径</span></span><br><span class="line">  <span class="attribute">ssl_protocols</span> TLSv1 TLSv1.<span class="number">1</span> TLSv1.<span class="number">2</span>;</span><br><span class="line">  <span class="attribute">ssl_ciphers</span> EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH;</span><br><span class="line">  <span class="attribute">ssl_prefer_server_ciphers</span> <span class="literal">on</span>;</span><br><span class="line"></span><br><span class="line">  <span class="attribute">server_name</span> github.com;</span><br><span class="line">  <span class="attribute">location</span> / &#123;</span><br><span class="line">    <span class="comment"># 国内镜像代理</span></span><br><span class="line">    <span class="attribute">proxy_pass</span> https://hub.fastgit.org/;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure><p>把生成的证书添加进信任的目录：<a href="https://www.cnblogs.com/ezgod/p/14270888.html">https://www.cnblogs.com/ezgod/p/14270888.html</a></p><p>在/root/test目录下：</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat test.com.crt &gt;&gt; /etc/pki/tls/certs/ca-bundle.crt</span><br></pre></td></tr></table></figure><p>修改host:</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure><p>实现本地反代，添加：</p><p><img src="/2021/09/21/paddle_git_nginx/4.png"></p><p>重启nginx，应用nginx.conf配置</p><p>找一下nginx在哪儿</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">whereis nginx</span><br></pre></td></tr></table></figure><p>我的nginx在/usr/sbin里</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/sbin</span><br><span class="line">./nginx -s reload</span><br></pre></td></tr></table></figure><p>重启后，我们来看看随意的git clone，网速很快。</p><p><img src="/2021/09/21/paddle_git_nginx/5.png"></p><p>自此，所有的文件都被定位到本地反代（国内镜像网站）。</p><p>注解：以后每次用到nginx，需要进入目录启动一下nginx</p><p>也有每次启动后都自动启用nginx，这里感觉自动启动不太好，没有配置。</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/sbin</span><br><span class="line">./nginx</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
       <categories>
-        <category>linux</category>
+          
+          <category> paddle </category>
+          
       </categories>
-      <tags>
-        <tag>linux</tag>
-        <tag>内核</tag>
-        <tag>kernel</tag>
-        <tag>编译</tag>
-        <tag>升级</tag>
-      </tags>
-  </entry>
+      
+      
+        <tags>
+            
+            <tag> 百度深度学习框架paddlepaddle </tag>
+            
+            <tag> nginx </tag>
+            
+            <tag> git clone </tag>
+            
+            <tag> 镜像 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
